@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "/home/alejandro/Desktop/Universidad/SO/Kernel_Simulator/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

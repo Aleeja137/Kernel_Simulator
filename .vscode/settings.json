@@ -1,5 +1,11 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "pthread.h": "c",
+        "globals.h": "c",
+        "process_generator.h": "c",
+        "schedule_dispacher.h": "c",
+        "timer.h": "c"
     }
 }

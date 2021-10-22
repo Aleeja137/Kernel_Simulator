@@ -4,6 +4,10 @@
 
 #include "data_structures.h"
 #include "globals.h"
+#include "clock.h"
+#include "schedule_dispacher.h"
+#include "process_generator.h"
+#include "timer.h"
 
 //Variables globales
 int num_CPUs;
@@ -14,6 +18,7 @@ machine_t machine;
 
 //COSAS PARA HACER EN GENERAL
 //La comunicación entre hilos mediante mutex_t y cond_t
+//Aprender a mover los headers a otra carpeta y que compile bien
 
 //COSAS PARA HACER AQUI
 //Inicializar estructuras (los de data_structures con los parámetros recibidos) (DONE)
@@ -56,15 +61,28 @@ int inicializar(int argc, char *argv[])
 int main(int argc, char *argv[]) {
    if (inicializar(argc,argv)==1)
    {
-       printf("la inicialización ha sido un éxito!!!");
+       printf("la inicialización ha sido un éxito!!! \n");
    } else {
-       printf("algo falla en la inicialización :(");
+       printf("algo falla en la inicialización :( \n");
    }
 
-    #ifdef TIMING
-    pthread_t id[4]; //Array que guarda los ID de los threads para el clock, timer, dispacher y PGenerator
     
-    pthread_create(id[0],NULL,clock,NULL);
-    #endif
+    pthread_t id[4]; //Array que guarda los ID de los threads para el clock, timer, dispacher y PGenerator
+    //id[0] clock
+    //id[1] dispacher
+    //id[2] PGenerator
+    //id[3] timer
+
+    int aux=0;
+    
+    pthread_create(&id[0],NULL,clock_func_prueba,&aux);
+    pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
+    pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
+    pthread_create(&id[3],NULL,timer_func_prueba,&aux);
+
+    pthread_join(id[0],NULL);
+    pthread_join(id[1],NULL);
+    pthread_join(id[2],NULL);
+    pthread_join(id[3],NULL);
     return 1;
 }
