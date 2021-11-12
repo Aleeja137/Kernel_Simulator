@@ -1,13 +1,11 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <pthread.h>
-
-#include "globals.h"
 #include "clock.h"
 
  void* clock_func_prueba(void * argument){
     printf("I am the clock boy \n");
     pthread_exit(NULL);
+<<<<<<< HEAD
 }
 void* clock_function ()
 {
@@ -25,4 +23,6 @@ void* clock_function ()
         cond_broadcast(condiciones[cond_clock_broadcast]);
         mutex_unlock(&mutex_clock);
     }
+=======
+>>>>>>> parent of 5a7dd54 (Updates)
 }

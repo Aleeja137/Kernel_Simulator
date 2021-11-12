@@ -1,13 +1,11 @@
 #include <pthread.h>
 #include <stdio.h>
-#include <pthread.h>
-
 #include "timer.h"
-#include "globals.h"
 
  void* timer_func_prueba(void * argument){
     printf("I am the timer boy \n");
     pthread_exit(NULL);
+<<<<<<< HEAD
 }
 void* timer_function(int indice_frec)
 {
@@ -25,4 +23,6 @@ void* timer_function(int indice_frec)
         cond_signal(condiciones[cond_clock]);
         cond_wait(condiciones[cond_clock_broadcast],&mutex_clock);
     }
+=======
+>>>>>>> parent of 5a7dd54 (Updates)
 }

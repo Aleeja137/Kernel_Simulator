@@ -13,6 +13,7 @@
 int num_CPUs;
 int num_cores;
 int num_processes;
+<<<<<<< HEAD
 int num_timers;
 int done_count;
 int* frecuencias;
@@ -22,6 +23,8 @@ pthread_cond_t* condiciones;
 int cond_clock; 
 pthread_mutex_t mutex_clock;
 int cond_clock_broadcast;
+=======
+>>>>>>> parent of 5a7dd54 (Updates)
 
 machine_t machine;
 
@@ -30,14 +33,21 @@ machine_t machine;
 //Aprender a mover los headers a otra carpeta y que compile bien
 
 //COSAS PARA HACER AQUI
-//(DONE) Inicializar estructuras (los de data_structures con los parámetros recibidos)
-//(DONE) Llamar a los pthreads y asignar un papel a cada
+//Inicializar estructuras (los de data_structures con los parámetros recibidos) (DONE)
+//Llamar a los pthreads y asignar un papel a cada
 
-int inicializar_hardware()
+int inicializar(int argc, char *argv[])
 {
-    //printf("Number of CPUs is %d \n",num_CPUs);
-    //printf("Number of cores is %d \n",num_cores);
-    //printf("Number of threads is %d \n",num_processes);
+    if (argc<4) {
+        printf("Not enough arguments");
+        exit(-1);
+    }
+    num_CPUs = atoi(argv[1]);
+    printf("Number of CPUs is %d \n",num_CPUs);
+    num_cores = atoi(argv[2]);
+    printf("Number of cores is %d \n",num_cores);
+    num_processes = atoi(argv[3]);
+    printf("Number of threads is %d \n",num_processes);
 
     //inicializar la máquina
     int cpu_id_aux=0;
@@ -47,32 +57,40 @@ int inicializar_hardware()
     {
         machine.cpu_array[i].cpu_id = cpu_id_aux;
         machine.cpu_array[i].core_array = (core_t*)malloc(num_cores*sizeof(core_t));
-        //printf("created cpu number %d \n",cpu_id_aux);
+        printf("created cpu number %d \n",cpu_id_aux);
         for (int j = 0; j < num_cores; j++)  //Recorre los cores dentro de cada CPU asignando identificador y guardando espacio para los hilos
         {
             machine.cpu_array[i].core_array[j].core_id = core_id_aux;
             machine.cpu_array[i].core_array[j].process_array = (process_info_t*)malloc(num_processes*sizeof(process_info_t));           
-            //printf("created core number %d \n",core_id_aux);
+            printf("created core number %d \n",core_id_aux);
             core_id_aux++;
         }
         cpu_id_aux++; 
     }
     return 1;
 }
-int crear_hilos(int* frecuencias)
-{
+
+int main(int argc, char *argv[]) {
+   if (inicializar(argc,argv)==1)
+   {
+       printf("la inicialización ha sido un éxito!!! \n");
+   } else {
+       printf("algo falla en la inicialización :( \n");
+   }
+
+    
+    pthread_t id[4]; //Array que guarda los ID de los threads para el clock, timer, dispacher y PGenerator
     //id[0] clock
     //id[1] dispacher
     //id[2] PGenerator
-    //id[3+] timer
-
-    id = (pthread_t*)malloc((3+num_timers)*sizeof(pthread_t));
+    //id[3] timer
 
     int aux=0;
     
-    pthread_create(&id[0],NULL,clock_function,&aux);
+    pthread_create(&id[0],NULL,clock_func_prueba,&aux);
     pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
     pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
+<<<<<<< HEAD
     
     for (int i = 0; i < num_timers; i++)
     {
@@ -124,6 +142,13 @@ int main(int argc, char *argv[]) {
 
 
     eliminar_hilos();
+=======
+    pthread_create(&id[3],NULL,timer_func_prueba,&aux);
+>>>>>>> parent of 5a7dd54 (Updates)
 
+    pthread_join(id[0],NULL);
+    pthread_join(id[1],NULL);
+    pthread_join(id[2],NULL);
+    pthread_join(id[3],NULL);
     return 1;
 }
