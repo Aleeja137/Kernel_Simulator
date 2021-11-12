@@ -22,7 +22,7 @@ void* timer_function(int indice_frec)
            printf("Me he despertado con frecuencia %d",frecuencias[indice_frec]);
            cuenta = 0;
         }
-        cond_signal(&cond_clock);
-        cond_wait(&cond_clock_broadcast,&mutex_clock);
+        cond_signal(condiciones[cond_clock]);
+        cond_wait(condiciones[cond_clock_broadcast],&mutex_clock);
     }
 }

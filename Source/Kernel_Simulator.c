@@ -18,9 +18,10 @@ int done_count;
 int* frecuencias;
 
 pthread_t* id; 
-pthread_cond_t cond_clock; 
+pthread_cond_t* condiciones;
+int cond_clock; 
 pthread_mutex_t mutex_clock;
-pthread_cond_t cond_clock_broadcast;
+int cond_clock_broadcast;
 
 machine_t machine;
 
@@ -75,7 +76,7 @@ int crear_hilos(int* frecuencias)
     
     for (int i = 0; i < num_timers; i++)
     {
-        pthread_create(&id[3+i],NULL,timer_function,(void*)&i);
+        pthread_create(&id[3+i],NULL,timer_function,i);
     }
 
     return 1;
@@ -88,6 +89,15 @@ int eliminar_hilos()
     }
 }
 //inicializar_mutex(s)
+int inicializar_control()
+{
+    condiciones = (pthread_cond_t*)malloc(2*sizeof(pthread_cond_t));
+    pthread_cond_init(&condiciones[0],NULL); 
+    cond_clock = 0;
+    pthread_cond_init(&condiciones[1],NULL);
+    cond_clock_broadcast = 1;
+
+}
 
 int main(int argc, char *argv[]) {
 
@@ -107,6 +117,7 @@ int main(int argc, char *argv[]) {
     }
     
     inicializar_hardware();
+    inicializar_control();
     crear_hilos(frecuencias);
 
 

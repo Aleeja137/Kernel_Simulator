@@ -18,11 +18,11 @@ void* clock_function ()
         mutex_lock(&mutex_clock);
         while (done_count < num_timers)
         {
-            cond_wait(&cond_clock,&mutex_clock);
+            cond_wait(condiciones[cond_clock],&mutex_clock);
             done_count++;
         }
         done_count = 0;
-        cond_broadcast(&cond_clock_broadcast);
+        cond_broadcast(condiciones[cond_clock_broadcast]);
         mutex_unlock(&mutex_clock);
     }
 }
