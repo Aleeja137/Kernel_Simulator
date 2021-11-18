@@ -17,6 +17,11 @@ int num_timers;
 int* frecuencias;
 pthread_t* id; 
 
+int done_count;
+pthread_mutex_t mtx; 
+pthread_cond_t cond; 
+pthread_cond_t cnd_br;
+
 machine_t machine;
 
 //COSAS PARA HACER EN GENERAL
@@ -64,7 +69,7 @@ int crear_hilos(int* frecuencias)
 
     int aux=0;
     
-    pthread_create(&id[0],NULL,clock_func_prueba,&aux);
+    pthread_create(&id[0],NULL,clock_function,&aux);
     pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
     pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
     
@@ -90,6 +95,12 @@ int eliminar_hilos()
     }
 }
 
+int inicializar_control(){
+    pthread_mutex_init(&mtx,NULL);
+    pthread_cond_init(&cond,NULL);
+    pthread_cond_init(&cnd_br,NULL);
+    return (1);
+}
 int main(int argc, char *argv[]) {
    if (argc<5) {
         printf("Faltan argumentos, formato es: \n num_CPU, num_core, num_hilos, num_timers, f_timer(1), f_timer(2),... f_timer(num_timers)\n");
@@ -107,10 +118,8 @@ int main(int argc, char *argv[]) {
     }
     
     inicializar_hardware();
+    inicializar_control();
     crear_hilos(frecuencias);
-
-
-
 
     eliminar_hilos();
 }
