@@ -27,12 +27,20 @@ process_queue_t lista_procesos;
 
 
 //COSAS PARA HACER EN GENERAL
-//La comunicación entre hilos mediante mutex_t y cond_t
 //Aprender a mover los headers a otra carpeta y que compile bien
 
 //COSAS PARA HACER AQUI
 //Inicializar estructuras (los de data_structures con los parámetros recibidos) (DONE)
-//Llamar a los pthreads y asignar un papel a cada
+//Llamar a los pthreads y asignar un papel a cada (DONE)
+//Comunicación clock-timer con mutex (DONE)
+//Generar procesos (DONE)
+//Que cada core acepte varios procesos (DONE)
+//Cambiar para que se generen solo dos timers (DONE)
+//Que un timer llame al pGenerator y otro al Scheduler
+//Que el scheduler asigne process_id a los cores libres (DONE)
+//Cada tick del clock baje el ttl de los procesos y si se acaba que los mate (DONE)
+//Que se genere un ttl aleatorio en el pGenerator (DONE)
+
 
 int inicializar_hardware()
 {
@@ -52,7 +60,7 @@ int inicializar_hardware()
         for (int j = 0; j < num_cores; j++)  //Recorre los cores dentro de cada CPU asignando identificador y guardando espacio para los hilos
         {
             machine.cpu_array[i].core_array[j].core_id = core_id_aux;
-            machine.cpu_array[i].core_array[j].id_procesos = (int*)malloc(num_processes*sizeof(int));           
+            machine.cpu_array[i].core_array[j].process_array = (process_info_t*)malloc(num_processes*sizeof(process_info_t));           
             //printf("created core number %d \n",core_id_aux);
             core_id_aux++;
         }
@@ -96,27 +104,27 @@ int eliminar_hilos()
         pthread_join(id[i],NULL);
     }
 }
-
 int inicializar_control(){
     pthread_mutex_init(&mtx,NULL);
     pthread_cond_init(&cond,NULL);
     pthread_cond_init(&cnd_br,NULL);
     return (1);
 }
+
 int main(int argc, char *argv[]) {
    if (argc<5) {
-        printf("Faltan argumentos, formato es: \n num_CPU, num_core, num_hilos, num_timers, f_timer(1), f_timer(2),... f_timer(num_timers)\n");
+        printf("Faltan argumentos, formato es: \n num_CPU, num_core, num_hilos, f_timer(1), f_timer(2) \n");
         exit(-1);
     }
     num_CPUs = atoi(argv[1]);
     num_cores = atoi(argv[2]);
     num_processes = atoi(argv[3]);
 
-    num_timers = atoi(argv[4]);
+    num_timers = 2;
     frecuencias = (int*)malloc((num_timers)*sizeof(int));
     for (int j = 0; j < num_timers; j++)
     {
-        frecuencias[j] = atoi(argv[5+j]);
+        frecuencias[j] = atoi(argv[4+j]);
     }
     
     inicializar_hardware();

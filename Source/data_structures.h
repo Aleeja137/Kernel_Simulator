@@ -10,6 +10,7 @@ typedef struct process_info  //PCB
 {
     int pid;
     int ttl;
+    int asigned_core_id;
 } process_info_t;
 
 typedef struct process_node  //Nodo para la lista de PCBs
@@ -32,7 +33,7 @@ typedef struct process_queue  //Lista de PCBs
 typedef struct core //Core, lista de hilos
 {
     int core_id;
-    int* id_procesos;
+    process_info_t* process_array;
 } core_t;
 typedef struct cpu //CPU, lista de cores
 {

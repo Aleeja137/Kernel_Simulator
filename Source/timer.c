@@ -4,7 +4,7 @@
 #include "globals.h"
 
  void* timer_func_prueba(void * argument){
-    printf("I am the timer boy \n");
+    printf("I am the timer\n");
     pthread_exit(NULL);
 }
 
