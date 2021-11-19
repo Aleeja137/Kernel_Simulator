@@ -1,7 +1,4 @@
 // Estructuras de datos para el proyecto
-
-#include "globals.h"
-
 #ifndef DATA_STRUCTURES_H
 #define DATA_STRUCTURES_H
 
@@ -17,7 +14,7 @@ typedef struct process_info  //PCB
 
 typedef struct process_node  //Nodo para la lista de PCBs
 {
-    struct process_node_t * next;
+    struct process_node * next;
     process_info_t me;
 } process_node_t;
 

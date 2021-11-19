@@ -23,6 +23,8 @@ pthread_cond_t cond;
 pthread_cond_t cnd_br;
 
 machine_t machine;
+process_queue_t lista_procesos;
+
 
 //COSAS PARA HACER EN GENERAL
 //La comunicación entre hilos mediante mutex_t y cond_t
@@ -71,7 +73,7 @@ int crear_hilos(int* frecuencias)
     
     pthread_create(&id[0],NULL,clock_function,&aux);
     pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
-    pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
+    pthread_create(&id[2],NULL,process_generator_function,&aux);
     
     for (int i = 0; i < num_timers; i++)
     {

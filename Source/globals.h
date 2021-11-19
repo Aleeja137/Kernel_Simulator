@@ -1,9 +1,14 @@
+#include "data_structures.h"
 extern int num_CPUs; //Número de procesadores de la máquina
 extern int num_cores; //Número de cores por CPU
 extern int num_processes; //Número de hilos por core
-//extern machine_t machine; //Machine object
+
+extern machine_t machine; //Machine object
+extern process_queue_t lista_procesos; //Lista con todos los procesos
+
 int* frecuencias;  //Array que guarda las frecuencias de los timers
 extern int num_timers; //Número de timers
+
 extern int done_count;//variable que dice cuántos timers han recibido el pulso del clock 
 extern pthread_t* id; //Array que guarda los ID de los threads para el clock, timer, dispacher y PGenerator
 
