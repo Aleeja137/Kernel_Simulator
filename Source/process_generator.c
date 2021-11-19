@@ -29,7 +29,7 @@ void* process_generator_function(void* args){
             lista_procesos.last->next = nuevo_process_node;
             lista_procesos.last = nuevo_process_node;
         }
-        printf("Creado el proceso %d, con ttl %d \n",lista_procesos.last->me.pid,lista_procesos.last->me.ttl);
+        //printf("Creado el proceso %d, con ttl %d \n",lista_procesos.last->me.pid,lista_procesos.last->me.ttl);
     }
     
 }

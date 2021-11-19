@@ -52,7 +52,7 @@ int inicializar_hardware()
         for (int j = 0; j < num_cores; j++)  //Recorre los cores dentro de cada CPU asignando identificador y guardando espacio para los hilos
         {
             machine.cpu_array[i].core_array[j].core_id = core_id_aux;
-            machine.cpu_array[i].core_array[j].process_array = (process_info_t*)malloc(num_processes*sizeof(process_info_t));           
+            machine.cpu_array[i].core_array[j].id_procesos = (int*)malloc(num_processes*sizeof(int));           
             //printf("created core number %d \n",core_id_aux);
             core_id_aux++;
         }

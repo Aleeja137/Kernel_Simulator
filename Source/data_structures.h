@@ -32,7 +32,7 @@ typedef struct process_queue  //Lista de PCBs
 typedef struct core //Core, lista de hilos
 {
     int core_id;
-    process_info_t* process_array;
+    int* id_procesos;
 } core_t;
 typedef struct cpu //CPU, lista de cores
 {
