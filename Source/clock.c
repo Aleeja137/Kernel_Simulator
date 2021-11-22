@@ -75,3 +75,7 @@ void* clock_function(void * argument){
         pthread_mutex_unlock(&mtx);
     }*/
 }
+
+void* reducirTtl(void* arg){
+
+}

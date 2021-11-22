@@ -24,13 +24,23 @@ void* timer_function(void * indice_frec)
             cuenta=0;
         }*/
         if (cuenta==frecuencias[*(int*)indice_frec]){
-            //printf("I woke up, Im timer %d \n",*((int*)indice_frec));
             if ((*((int*)indice_frec))==0){    //Timer 0 llama a process generator
-                //printf("I woke up, Im timer %d llamando a generator\n",*((int*)indice_frec));
-                process_generator_function(NULL);
+                pthread_mutex_lock(&mtxpGenerator);
+                while (done_countpGenerator<1){
+                    pthread_cond_wait(&condpGenerator,&mtxpGenerator);   
+                }
+                done_countpGenerator=0;
+                pthread_cond_broadcast(&cnd_brpGenerator);
+                pthread_mutex_unlock(&mtxpGenerator);
+                
             } else {
-                //printf("I woke up, Im timer %d llamando a scheduler\n",*((int*)indice_frec));
-                schedule_dispacher_function(NULL);
+                pthread_mutex_lock(&mtxScheduler);
+                while (done_countScheduler<1){
+                    pthread_cond_wait(&condScheduler,&mtxScheduler);
+                }
+                done_countScheduler=0;
+                pthread_cond_broadcast(&cnd_brScheduler);
+                pthread_mutex_unlock(&mtxScheduler);
             }
             
             cuenta=0;

@@ -22,6 +22,16 @@ pthread_mutex_t mtx;
 pthread_cond_t cond; 
 pthread_cond_t cnd_br;
 
+int done_countScheduler;
+pthread_mutex_t mtxScheduler; 
+pthread_cond_t condScheduler; 
+pthread_cond_t cnd_brScheduler;
+
+int done_countpGenerator;
+pthread_mutex_t mtxpGenerator; 
+pthread_cond_t condpGenerator; 
+pthread_cond_t cnd_brpGenerator;
+
 machine_t machine;
 process_queue_t lista_procesos;
 
@@ -92,8 +102,8 @@ int crear_hilos(int* frecuencias)
     int aux=0;
     
     pthread_create(&id[0],NULL,clock_function,&aux);
-    pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
-    pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
+    pthread_create(&id[1],NULL,schedule_dispacher_function,&aux);
+    pthread_create(&id[2],NULL,process_generator_function,&aux);
     
     for (int i = 0; i < num_timers; i++)
     {

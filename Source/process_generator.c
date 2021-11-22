@@ -9,9 +9,13 @@
     printf("I am the PGenerator\n");
     pthread_exit(NULL);
 }
-int ultimoid = 0;
+
 void* process_generator_function(void* args){
-    
+    pthread_mutex_lock(&mtxpGenerator);
+    int ultimoid = 0;
+    while (1)
+    {
+        done_countpGenerator++;
         //Crear nuevo proceso
         process_node_t* nuevo_process_node = (process_node_t*)malloc(sizeof(process_node_t));  
         process_info_t nuevo_process_info;
@@ -31,6 +35,7 @@ void* process_generator_function(void* args){
             lista_procesos.last = nuevo_process_node;
         }
         printf("Creado el proceso %d, con ttl %d \n",lista_procesos.last->me.pid,lista_procesos.last->me.ttl);
-    
-    
+        pthread_cond_signal(&condpGenerator);
+        pthread_cond_wait(&cnd_brpGenerator,&mtxpGenerator);
+    }
 }

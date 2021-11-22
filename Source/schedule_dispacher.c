@@ -11,8 +11,10 @@
 
  void* schedule_dispacher_function(void * argument){
     bool asignado;
-    //while (1)
-    //{
+    pthread_mutex_lock(&mtxScheduler);
+    while (1)
+    {
+        done_countScheduler++;
         //Si hay procesos en la cola
         if (lista_procesos.first!=NULL){
             asignado=false;
@@ -37,5 +39,7 @@
         } else {
             printf("No hay procesos en espera \n");
         }
-    //}
+        pthread_cond_signal(&condScheduler);
+        pthread_cond_wait(&cnd_brScheduler,&mtxScheduler);
+    }
 }
