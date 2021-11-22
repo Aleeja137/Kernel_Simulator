@@ -44,6 +44,11 @@ process_queue_t lista_procesos;
 
 int inicializar_hardware()
 {
+    //Crear empty process
+    process_info_t proceso_vacio;
+    proceso_vacio.pid=-1;
+    proceso_vacio.ttl=-1;
+    proceso_vacio.asigned_core_id=-1;
     //printf("Number of CPUs is %d \n",num_CPUs);
     //printf("Number of cores is %d \n",num_cores);
     //printf("Number of threads is %d \n",num_processes);
@@ -60,7 +65,14 @@ int inicializar_hardware()
         for (int j = 0; j < num_cores; j++)  //Recorre los cores dentro de cada CPU asignando identificador y guardando espacio para los hilos
         {
             machine.cpu_array[i].core_array[j].core_id = core_id_aux;
-            machine.cpu_array[i].core_array[j].process_array = (process_info_t*)malloc(num_processes*sizeof(process_info_t));           
+            machine.cpu_array[i].core_array[j].process_array = (process_info_t*)malloc(num_processes*sizeof(process_info_t));
+            for (int h = 0; h < num_processes; h++)
+            {
+                //printf("Barrera 11");
+                machine.cpu_array[i].core_array[j].process_array[h] = proceso_vacio;
+                //printf("Barrera 12");
+            }
+                       
             //printf("created core number %d \n",core_id_aux);
             core_id_aux++;
         }
@@ -81,7 +93,7 @@ int crear_hilos(int* frecuencias)
     
     pthread_create(&id[0],NULL,clock_function,&aux);
     pthread_create(&id[1],NULL,schedule_dispacher_func_prueba,&aux);
-    pthread_create(&id[2],NULL,process_generator_function,&aux);
+    pthread_create(&id[2],NULL,process_generator_func_prueba,&aux);
     
     for (int i = 0; i < num_timers; i++)
     {
