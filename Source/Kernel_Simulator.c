@@ -36,22 +36,6 @@ machine_t machine;
 process_queue_t lista_procesos;
 
 
-//COSAS PARA HACER EN GENERAL
-//Aprender a mover los headers a otra carpeta y que compile bien
-
-//COSAS PARA HACER AQUI
-//Inicializar estructuras (los de data_structures con los parámetros recibidos) (DONE)
-//Llamar a los pthreads y asignar un papel a cada (DONE)
-//Comunicación clock-timer con mutex (DONE)
-//Generar procesos (DONE)
-//Que cada core acepte varios procesos (DONE)
-//Cambiar para que se generen solo dos timers (DONE)
-//Que un timer llame al pGenerator y otro al Scheduler
-//Que el scheduler asigne process_id a los cores libres (DONE)
-//Cada tick del clock baje el ttl de los procesos y si se acaba que los mate (DONE)
-//Que se genere un ttl aleatorio en el pGenerator (DONE)
-
-
 int inicializar_hardware()
 {
     //Crear empty process
@@ -59,9 +43,6 @@ int inicializar_hardware()
     proceso_vacio.pid=-1;
     proceso_vacio.ttl=-1;
     proceso_vacio.asigned_core_id=-1;
-    //printf("Number of CPUs is %d \n",num_CPUs);
-    //printf("Number of cores is %d \n",num_cores);
-    //printf("Number of threads is %d \n",num_processes);
 
     //inicializar la máquina
     int cpu_id_aux=0;
@@ -82,8 +63,7 @@ int inicializar_hardware()
                 machine.cpu_array[i].core_array[j].process_array[h] = proceso_vacio;
                 //printf("Barrera 12");
             }
-                       
-            //printf("created core number %d \n",core_id_aux);
+
             core_id_aux++;
         }
         cpu_id_aux++; 
@@ -127,15 +107,22 @@ int eliminar_hilos()
     }
 }
 int inicializar_control(){
+
     pthread_mutex_init(&mtx,NULL);
     pthread_cond_init(&cond,NULL);
     pthread_cond_init(&cnd_br,NULL);
+    pthread_mutex_init(&mtxpGenerator,NULL);
+    pthread_cond_init(&condpGenerator,NULL);
+    pthread_cond_init(&cnd_brpGenerator,NULL);
+    pthread_mutex_init(&mtxScheduler,NULL);
+    pthread_cond_init(&condScheduler,NULL);
+    pthread_cond_init(&cnd_brScheduler,NULL);
     return (1);
 }
 
 int main(int argc, char *argv[]) {
    if (argc<5) {
-        printf("Faltan argumentos, formato es: \n num_CPU, num_core, num_hilos, f_timer(1), f_timer(2) \n");
+        printf("Faltan argumentos, formato es: \n num_CPU, num_core, num_hilos, f_pGenerator), f_Scheduler \n");
         exit(-1);
     }
     num_CPUs = atoi(argv[1]);

@@ -42,7 +42,7 @@ typedef struct cpu //CPU, lista de cores
 } cpu_t;
 typedef struct machine  //Máquina principal, lista de CPUs
 {
-    //falta string con nombre de la máquina
+    //falta string con nombre de la máquina ??
     cpu_t* cpu_array;
 } machine_t;
 

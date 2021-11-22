@@ -27,7 +27,7 @@ void* clock_function(void * argument){
 }
 int internal_count = 0; //variable para que no reduzca el ttl cada ciclo de reloj
 void* reducirTtl(void* arg){
-    if(internal_count==1000000)
+    if(internal_count==1000000)  //Tengo dudas con esto
     {
         //Recorro los CPUs, cores e hilos reduciendo el ttl
         for (int i = 0; i < num_CPUs; i++)
@@ -56,6 +56,5 @@ void* reducirTtl(void* arg){
         internal_count=0;
     } else {
         internal_count++;
-    }
-       
+    }    
 }
