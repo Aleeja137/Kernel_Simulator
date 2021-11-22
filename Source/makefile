@@ -1,0 +1,1 @@
+gcc -O2 -o Kernel_Simulator Kernel_Simulator.c clock.c timer.c schedule_dispacher.c process_generator.c -lm -pthread
