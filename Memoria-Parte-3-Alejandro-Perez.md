@@ -296,4 +296,6 @@ Arreglar estos dos aspectos supondría un funcionamiento correcto, y es es la me
 Ha sido un proyecto muy interesante, y me hubiese gustado dedicarle más tiempo durante el primer cuatrimestre, ya que lo dejé para el segundo y ha resultado más ocupado de lo planeado. De todas formas, he aprendido mucho, y el proyecto de IOS me ha servido mucho en cuanto al aspecto de implementación. Por último, me gustaría agradecer a Olatz por las oportunidades que me ha dado durante el curso respecto a la asignatura.
 ## Apéndice
 [Carpeta Source](https://drive.google.com/drive/folders/1XcHaQjp05pgdpKixIA7dL_90XHrAx9xx?usp=sharing)
+[Código en Github](https://github.com/Aleeja137/Kernel_Simulator)
+[Enunciado original](https://egela.ehu.eus/pluginfile.php/4977246/mod_resource/content/3/Parte%203%20%5B21-22%5D.pdf)
 
