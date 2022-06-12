@@ -6,6 +6,8 @@
         "globals.h": "c",
         "process_generator.h": "c",
         "schedule_dispacher.h": "c",
-        "timer.h": "c"
+        "timer.h": "c",
+        "data_structures.h": "c",
+        "loader.h": "c"
     }
 }

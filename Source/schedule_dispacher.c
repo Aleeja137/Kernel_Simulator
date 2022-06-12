@@ -15,6 +15,7 @@
     while (1)
     {
         done_countScheduler++;
+        // CONTROL : printf("Llamado al dispatcher desde el timer\n");
         //Si hay procesos en la cola
         if (lista_procesos.first!=NULL){
             asignado=false;
@@ -22,16 +23,37 @@
             for (int i = 0; i < num_CPUs && asignado==false; i++){
                 for (int j = 0; j < num_cores && asignado==false; j++){
                     for (int k = 0; k < num_processes && asignado==false; k++){
-                        if (machine.cpu_array[i].core_array[j].process_array[k].asigned_core_id==-1)
+                        if (machine.cpu_array[i].core_array[j].hilos[k].proceso.status == -1) //Significa que el proceso ha acabado, es decir, el hilo está libre
                         {
-                            machine.cpu_array[i].core_array[j].process_array[k] = lista_procesos.first->me;
-                            machine.cpu_array[i].core_array[j].process_array[k].asigned_core_id = machine.cpu_array[i].core_array[j].core_id;                                asignado=true;
+                            HwThread_t new_thread;
+
+                            new_thread.proceso = lista_procesos.first->me;
+                            new_thread.PC = lista_procesos.first->me.mm.data;
+                            new_thread.PTBR = lista_procesos.first->me.mm.pgb;
+                            new_thread.proceso.status = 1;
+                            for (int p = 0; p < 4; p++)
+                            {
+                                new_thread.MMU.TLB[p].valid = -1;
+                            }
+
+                            machine.cpu_array[i].core_array[j].hilos[k] = new_thread;
                             asignado=true;
+
+                            // Si solo hay un proceso en la lista, el último va a ser null
+                            if (lista_procesos.last == lista_procesos.first)
+                            {
+                                lista_procesos.last = NULL;
+                            }
+                            // En cualquier caso, el rimero debe apuntar al siguiente (si es el único se queda en null, como debería)
                             lista_procesos.first = lista_procesos.first->next;
-                            printf("asignado proceso %d con ttl %d al core %d\n",
-                                machine.cpu_array[i].core_array[j].process_array[k].pid,
-                                machine.cpu_array[i].core_array[j].process_array[k].ttl,
-                                machine.cpu_array[i].core_array[j].process_array[k].asigned_core_id);
+                            
+                            printf("Asignado proceso %d al hilo %i del core %i de la cpu %i, teniendo data en %d y text en %d\n",
+                                machine.cpu_array[i].core_array[j].hilos[k].proceso.pid,
+                                k,
+                                machine.cpu_array[i].core_array[j].core_id,
+                                machine.cpu_array[i].cpu_id,
+                                machine.cpu_array[i].core_array[j].hilos[k].proceso.mm.code,
+                                machine.cpu_array[i].core_array[j].hilos[k].proceso.mm.data);
                         }    
                     }    
                 }    

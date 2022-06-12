@@ -6,6 +6,9 @@ extern int num_processes; //Número de hilos por core
 extern machine_t machine; //Machine object
 extern process_queue_t lista_procesos; //Lista con todos los procesos
 
+extern unsigned char* memoria_fisica; //Variable que simula la memoria física
+extern frames_list lista_frames;
+
 int* frecuencias;  //Array que guarda las frecuencias de los timers
 extern int num_timers; //Número de timers
 

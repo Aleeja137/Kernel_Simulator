@@ -19,7 +19,7 @@ void* timer_function(void * indice_frec)
         //hacer cosas
         cuenta++;
         if (cuenta==frecuencias[*(int*)indice_frec]){
-            if ((*((int*)indice_frec))==0){    //Timer 0 llama a process generator
+            if ((*((int*)indice_frec))==0){    //Timer 0 llama a loader
                 pthread_mutex_lock(&mtxpGenerator);
                 while (done_countpGenerator<1){
                     pthread_cond_wait(&condpGenerator,&mtxpGenerator);   
